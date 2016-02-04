@@ -10,3 +10,10 @@ very 간단
 $ remove_android.sh
 ```
 
+### push.sh
+내용 수정하고 add commit push 를 세번이나 쳐야되는게 귀찮아서 만듦.
+
+#### usage
+```
+$ push.sh -m "커밋메세지를 적으삼"
+```
