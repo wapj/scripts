@@ -26,3 +26,20 @@ $ push.sh -m "커밋메세지를 적으삼"
 ```
 $ initial_push.sh user@repository_url
 ```
+
+## Docker관련
+
+### docker/docker_registry_cmd.sh
+
+#### usage
+
+**컨테이너리스트 보기**
+```
+$ docker_registry_cmd.sh catalog
+```
+
+
+**특정컨테이너의 태그리스트 보기**
+```
+$ docker_registry_cmd.sh list [컨테이너명]
+```
