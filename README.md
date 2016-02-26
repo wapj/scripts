@@ -43,3 +43,37 @@ $ docker_registry_cmd.sh catalog
 ```
 $ docker_registry_cmd.sh list [컨테이너명]
 ```
+
+## Virtualbox 관련
+
+### install/install_virtualbox_guest.sh
+
+#### Usage
+
+없음..그냥 실행하면됨.
+
+```
+$ install_virtualbox_guest.sh
+```
+
+기왕 적은김에 `virtualbox provision`을 사용해 보자.
+
+아래와 같이  `Vagrantfile`의 `config.vm.provision` 설정에 추가해주면 된다.
+```
+Vagrant.configure(2) do |config|
+  # boxes at https://atlas.hashicorp.com/search.
+
+    config.vm.box = "cent7"
+    config.vm.host_name = "server"
+    config.vm.network "private_network", ip: "10.0.0.10"
+
+    config.vm.provision "shell", inline: <<-SHELL
+      sudo sed -i 's/kr.archive.ubuntu.com/ftp.daum.net/g' /etc/apt/sources.list
+      sudo sed -i 's/archive.ubuntu.com/ftp.daum.net/g' /etc/apt/sources.list
+      sudo apt-get update
+      sudo apt-get dist-upgrade -y
+      sudo apt-get install virtualbox-guest-x11 -y
+    SHELL
+  end
+end
+```
