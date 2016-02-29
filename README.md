@@ -59,11 +59,12 @@ $ install_virtualbox_guest.sh
 기왕 적은김에 `virtualbox provision`을 사용해 보자.
 
 아래와 같이  `Vagrantfile`의 `config.vm.provision` 설정에 추가해주면 된다.
+`ubuntu`에서만 작동한다~
 ```
 Vagrant.configure(2) do |config|
   # boxes at https://atlas.hashicorp.com/search.
 
-    config.vm.box = "cent7"
+    config.vm.box = "ubuntu"
     config.vm.host_name = "server"
     config.vm.network "private_network", ip: "10.0.0.10"
 
