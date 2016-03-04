@@ -18,13 +18,22 @@ $ remove_android.sh
 $ push.sh -m "커밋메세지를 적으삼"
 ```
 
-### initial_push.sh
+### git/initial_push.sh
 저장소 처음만들때 해야되는일 귀찮아서 만듦
 
 #### usage
 
 ```
 $ initial_push.sh user@repository_url
+```
+
+### git/apply_git_ignore.sh
+git ignore 적용하는 스크립트
+
+#### usage
+
+```
+$ apply_git_ignore.sh
 ```
 
 ## Docker관련
