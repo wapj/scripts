@@ -1,0 +1,5 @@
+start_sonarqube.sh
+sonar-runner
+sonar.sh
+stop_mysql.sh
+start_mysql.sh
