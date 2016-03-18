@@ -18,6 +18,9 @@ $ install_mariadb_ubuntu.sh
 python3에서 mysql client를 설치하는 스크립트이다. `PyMySQL`사용하면 `pip`만 하면 되지만, 느리다. 
 그래서 C의 그것을 래핑한 `mysqlclient`를 사용한다. 설치법이 귀찮으므로 스크립트 작성해둠.
 
+홈페이지는 여기니깐 사용법을 모르겠으면 들어가보셈.
+[mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
+
 ```
 $ install_mysqlclient_for_python.sh
 ```
