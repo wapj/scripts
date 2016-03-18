@@ -13,6 +13,16 @@ $ install_mariadb_ubuntu.sh
 ```
 
 
+### install_mysqlclient_for_python.sh 
+
+python3에서 mysql client를 설치하는 스크립트이다. `PyMySQL`사용하면 `pip`만 하면 되지만, 느리다. 
+그래서 C의 그것을 래핑한 `mysqlclient`를 사용한다. 설치법이 귀찮으므로 스크립트 작성해둠.
+
+```
+$ install_mysqlclient_for_python.sh
+```
+
+
 ### remove_android.sh
 mac에 안드로이드 sdk를 설치했더니 19GB를 사용하고 있어서, 싹 지우는 스크립트를 만듬.
 
