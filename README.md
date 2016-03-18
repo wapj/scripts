@@ -26,14 +26,7 @@ $ install_mysqlclient_for_python.sh
 ```
 
 
-### remove_android.sh
-mac에 안드로이드 sdk를 설치했더니 19GB를 사용하고 있어서, 싹 지우는 스크립트를 만듬.
-
-#### usage
-very 간단
-```
-$ remove_android.sh
-```
+## git관련
 
 ### push.sh
 내용 수정하고 add commit push 를 세번이나 쳐야되는게 귀찮아서 만듦.
@@ -93,3 +86,16 @@ $ install_virtualbox_guest.sh
 만약에 자동화를 하고 싶다면, chef나 ansible 같은것을 쓰는게 좋을것 같다.
 
 vagrant의 provision기능을 써보려했으나, 실패함.
+
+## 안드로이드
+
+### remove_android.sh
+mac에 안드로이드 sdk를 설치했더니 19GB를 사용하고 있어서, 싹 지우는 스크립트를 만듬.
+
+#### usage
+very 간단
+```
+$ remove_android.sh
+```
+
+
