@@ -1,6 +1,18 @@
 # scripts
 내가 사용하는 스크립트들
 
+## 설치관련
+
+### install mariadb 10.1 on ubuntu(14.04)
+
+우분투(14.04)버전에서 mariadb를 설치하는 스크립트이다. 
+[mariadb home](https://downloads.mariadb.org/mariadb/repositories/#mirror=kaist&distro=Ubuntu&distro_release=trusty--ubuntu_trusty&version=10.1)에서 가져왔다.
+
+```
+$ install_mariadb_ubuntu.sh
+```
+
+
 ### remove_android.sh
 mac에 안드로이드 sdk를 설치했더니 19GB를 사용하고 있어서, 싹 지우는 스크립트를 만듬.
 
