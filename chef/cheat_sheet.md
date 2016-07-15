@@ -5,3 +5,5 @@
 ```
 $ echo user@server1 user@server2 user@server3 | xargs -n 1 knife solo [prepare|cook|bootstrap]
 ```
+
+
