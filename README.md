@@ -3,6 +3,14 @@
 
 ## 설치관련
 
+### elasticbeans talk mac용 설치
+
+
+```
+$ brew install awsebcli
+$ eb --version
+```
+
 ### install golang
 
 golang 설치~
