@@ -12,7 +12,8 @@ if len(sys.argv) < 2:
 connection = pymysql.connect(host='localhost', user='', password='', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 table_name = sys.argv[1]
 field = []
-
+file_name = "dump_%s.txt" % table_name
+f = open(file_name, 'w')
 
 def select_desc():
     with connection.cursor() as cursor:
@@ -42,11 +43,16 @@ def select_table():
 
 
 def dump_yaml():
-    print('%s:' % table_name)
+    printFile('%s:' % table_name)
     for row in select_table():
-        print('-')
+        printFile('-')
         for f in field:
-            print("    " + f + ": " + str(row[f]))
+            printFile("    " + f + ": " + str(row[f]))
+
+
+def printFile(str):
+    print(str)
+    f.write(str + '\n')
 
 
 dump_yaml()
