@@ -26,7 +26,7 @@ def select_table():
     select_query = "SELECT "
     for r in result:
         field.append(r['Field'])
-        select_query += (r['Field']) + ','
+        select_query += " `%s`," % (r['Field'])
 
     select_query = select_query[:len(select_query) -1] + " FROM " + table_name
 
