@@ -1,0 +1,233 @@
+pokopoko.evt_entireUserReward:
+-
+    idx: 28
+    itemtype: 1012
+    itemvalue: 1
+    postmsg: '주말을 이렇게 떠나보낼 순 없죠, 더블폭탄으로 일요일 화끈하게 마무리! 빵야빵야♥'
+    sts: 1439721300
+    ets: 1439726400
+    limittime: 0
+-
+    idx: 29
+    itemtype: 2001
+    itemvalue: 100
+    postmsg: '여행은 언제나 옳다..★     모험에너지 받으시고 모험모드로 여행 떠.나.세.요! (100개)'
+    sts: 1439635200
+    ets: 1439640000
+    limittime: 0
+-
+    idx: 30
+    itemtype: 2001
+    itemvalue: 100
+    postmsg: '여행은 언제나 옳다..★     모험에너지 받으시고 모험모드로 여행 떠.나.세.요! (100개)'
+    sts: 1439635200
+    ets: 1439640000
+    limittime: 0
+-
+    idx: 31
+    itemtype: 1011
+    itemvalue: 1
+    postmsg: '주말을 이렇게 떠나보낼 순 없죠, 화살폭탄으로 일요일 화끈하게 마무리! 빵야빵야♥'
+    sts: 1439721300
+    ets: 1439726400
+    limittime: 0
+-
+    idx: 32
+    itemtype: 2001
+    itemvalue: 100
+    postmsg: '여행은 언제나 옳다..★     모험에너지 받으시고 모험모드로 여행 떠.나.세.요! (100개)'
+    sts: 1439635200
+    ets: 1439640000
+    limittime: 0
+-
+    idx: 33
+    itemtype: 1000
+    itemvalue: 3
+    postmsg: '★★불금♨을 위한 필수품!★★ 클로버 3개 받으시고 오늘밤도 즐겁게 포코포코♥'
+    sts: 1439550000
+    ets: 1439553600
+    limittime: 0
+-
+    idx: 37
+    itemtype: 1001
+    itemvalue: 1000
+    postmsg: '◆긴급 점검 보상◆기다려 주셔서(체리1000개)'
+    sts: 1462171920
+    ets: 1462413600
+    limittime: 1462759200
+-
+    idx: 38
+    itemtype: 1001
+    itemvalue: 8388607
+    postmsg: '체리지급 테스트'
+    sts: 1464931560
+    ets: 1465017900
+    limittime: 1465017900
+-
+    idx: 39
+    itemtype: 1001
+    itemvalue: 30000
+    postmsg: 'TEST'
+    sts: 1464941340
+    ets: 1465027500
+    limittime: 1465027800
+-
+    idx: 42
+    itemtype: 1000
+    itemvalue: 3
+    postmsg: '[접속 깜짝선물] \n오늘도 포코포코! 내일도?!(♣3개)'
+    sts: 1465290000
+    ets: 1465293600
+    limittime: 1465552800
+-
+    idx: 43
+    itemtype: 1000
+    itemvalue: 3
+    postmsg: '[접속 깜짝선물]오늘도 오신 그대에게~(♣3개)'
+    sts: 1465376400
+    ets: 1465380000
+    limittime: 1465639200
+-
+    idx: 44
+    itemtype: 1010
+    itemvalue: 1
+    postmsg: '♥깜짝선물♥ 오늘 하루도 힘내세요~ (사과 1개)'
+    sts: 1466647200
+    ets: 1466650800
+    limittime: 1466693940
+-
+    idx: 45
+    itemtype: 1011
+    itemvalue: 1
+    postmsg: '♥깜짝선물♥ 오늘 하루도 힘내세요~ (화살폭탄 1개) '
+    sts: 1466647200
+    ets: 1466650800
+    limittime: 1466693940
+-
+    idx: 46
+    itemtype: 1012
+    itemvalue: 1
+    postmsg: '♥깜짝선물♥ 오늘 하루도 힘내세요~ (더블폭탄 1개)'
+    sts: 1466647200
+    ets: 1466650800
+    limittime: 1466693940
+-
+    idx: 47
+    itemtype: 1003
+    itemvalue: 10
+    postmsg: '[선물] 8/10 접속 선물 (FP10)'
+    sts: 1470798000
+    ets: 1470805200
+    limittime: 1471359540
+-
+    idx: 48
+    itemtype: 1010
+    itemvalue: 3
+    postmsg: '[선물] 8/10 접속 선물 (사과 3개) '
+    sts: 1470823200
+    ets: 1470830400
+    limittime: 1471359540
+-
+    idx: 49
+    itemtype: 1003
+    itemvalue: 10
+    postmsg: '[선물] 8/11 접속 선물 (FP10)'
+    sts: 1470884400
+    ets: 1470891600
+    limittime: 1471445940
+-
+    idx: 50
+    itemtype: 1011
+    itemvalue: 3
+    postmsg: '[선물] 8/11 접속 선물 (화살폭탄 3개) '
+    sts: 1470909600
+    ets: 1470916800
+    limittime: 1471445940
+-
+    idx: 51
+    itemtype: 1003
+    itemvalue: 10
+    postmsg: '[선물] 8/12 접속 선물 (FP10)'
+    sts: 1470970800
+    ets: 1470978000
+    limittime: 1471532340
+-
+    idx: 52
+    itemtype: 1000
+    itemvalue: 2
+    postmsg: '[선물] 8/12 접속 선물 (클로버 2개)'
+    sts: 1470996000
+    ets: 1471003200
+    limittime: 1471532340
+-
+    idx: 53
+    itemtype: 1003
+    itemvalue: 10
+    postmsg: '[선물] 8/13 접속 선물 (FP10)'
+    sts: 1471057200
+    ets: 1471064400
+    limittime: 1471618740
+-
+    idx: 54
+    itemtype: 1013
+    itemvalue: 1
+    postmsg: '[선물] 8/13 접속 선물 (레인보우 폭탄 1개)'
+    sts: 1471082400
+    ets: 1471089600
+    limittime: 1471618740
+-
+    idx: 55
+    itemtype: 1003
+    itemvalue: 10
+    postmsg: '[선물] 8/14 접속 선물 (FP10)'
+    sts: 1471143600
+    ets: 1471150800
+    limittime: 1471705140
+-
+    idx: 56
+    itemtype: 2001
+    itemvalue: 100
+    postmsg: '[선물] 8/14 접속 선물 (모험 에너지 100) '
+    sts: 1471168800
+    ets: 1471176000
+    limittime: 1471705140
+-
+    idx: 57
+    itemtype: 2001
+    itemvalue: 100
+    postmsg: '[선물] 8/14 접속 선물 (모험 에너지 100) '
+    sts: 1471168800
+    ets: 1471176000
+    limittime: 1471705140
+-
+    idx: 58
+    itemtype: 1003
+    itemvalue: 10
+    postmsg: '[선물] 8/15 접속 선물 (FP10)'
+    sts: 1471230000
+    ets: 1471237200
+    limittime: 1471791540
+-
+    idx: 59
+    itemtype: 1012
+    itemvalue: 2
+    postmsg: '[선물] 8/15 접속 선물 (더블 폭탄 2개)'
+    sts: 1471255200
+    ets: 1471262400
+    limittime: 1471791540
+-
+    idx: 60
+    itemtype: 1003
+    itemvalue: 10
+    postmsg: '[선물] 8/16 접속 선물 (FP10)'
+    sts: 1471316400
+    ets: 1471323600
+    limittime: 1471877940
+-
+    idx: 61
+    itemtype: 1000
+    itemvalue: 3
+    postmsg: '[선물] 8/16 접속 선물 (클로버 3개)'
+    sts: 1471341600
+    ets: 1471348800
+    limittime: 1471877940

@@ -12,6 +12,7 @@ if len(sys.argv) < 2:
 connection = pymysql.connect(host='localhost', user='', password='', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 table_name = sys.argv[1]
 field = []
+field_type = {}
 file_name = "dump_%s.txt" % table_name
 f = open(file_name, 'w')
 
@@ -28,6 +29,7 @@ def select_table():
     select_query = "SELECT "
     for r in result:
         field.append(r['Field'])
+        field_type[r['Field']] = r['Type']
         select_query += " `%s`," % (r['Field'])
 
     select_query = select_query[:len(select_query) -1] + " FROM " + table_name
@@ -47,7 +49,11 @@ def dump_yaml():
     for row in select_table():
         printFile('-')
         for f in field:
-            printFile("    " + f + ": " + str(row[f]))
+            t = field_type[f]
+            if t.startswith('varchar'):
+                printFile("    " + f + ": '" + row[f] + "'")
+            else:
+                printFile("    " + f + ": " + str(row[f]))
 
 
 def printFile(str):
