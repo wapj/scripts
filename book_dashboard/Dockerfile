@@ -17,7 +17,7 @@ RUN pip install uv
 RUN uv sync --frozen
 
 # 애플리케이션 코드 복사
-COPY py/ ./py/
+COPY *.py ./
 
 # 데이터 디렉토리 생성
 RUN mkdir -p /app/data
@@ -30,4 +30,4 @@ ENV DB_PATH=/app/data/book_rankings.db
 EXPOSE 8000
 
 # 기본 명령어 (웹 대시보드 실행)
-CMD ["uv", "run", "python", "py/fastapi_dashboard.py"]
+CMD ["uv", "run", "python", "fastapi_dashboard.py"]

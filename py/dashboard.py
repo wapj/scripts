@@ -186,7 +186,7 @@ def main():
     except Exception as e:
         st.error(f"데이터를 로드할 수 없습니다: {e}")
         st.info(
-            "먼저 `uv run py/book_ranking_monitor.py --once` 명령으로 데이터를 수집해주세요."
+            "먼저 `uv run book_ranking_monitor.py --once` 명령으로 데이터를 수집해주세요."
         )
         return
 

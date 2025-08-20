@@ -9,7 +9,7 @@ services:
       - ./data:/app/data
     environment:
       - DB_PATH=/app/data/book_rankings.db
-    command: ["uv", "run", "python", "py/book_ranking_monitor.py"]
+    command: ["uv", "run", "python", "book_ranking_monitor.py"]
     restart: unless-stopped
     depends_on:
       - book-dashboard
@@ -19,12 +19,12 @@ services:
     build: .
     container_name: book-ranking-dashboard
     ports:
-      - "50820:8000"
+      - "8000:8000"
     volumes:
       - ./data:/app/data
     environment:
       - DB_PATH=/app/data/book_rankings.db
-    command: ["uv", "run", "python", "py/fastapi_dashboard.py"]
+    command: ["uv", "run", "python", "fastapi_dashboard.py"]
     restart: unless-stopped
 
   # 초기 데이터 수집 (한 번만 실행)
@@ -35,7 +35,7 @@ services:
       - ./data:/app/data
     environment:
       - DB_PATH=/app/data/book_rankings.db
-    command: ["uv", "run", "python", "py/book_ranking_monitor.py", "--once"]
+    command: ["uv", "run", "python", "book_ranking_monitor.py", "--once"]
     restart: "no"
     profiles:
       - init

@@ -5,16 +5,16 @@
 ## 📁 프로젝트 구조
 
 ```
-/Users/gyus/VSCode/scripts/
+/Users/gyus/VSCode/scripts/book_dashboard/
 ├── Dockerfile              # 도커 이미지 정의
 ├── docker-compose.yml      # 서비스 구성
 ├── .dockerignore          # 도커 빌드 제외 파일
 ├── data/                  # SQLite DB 저장 (volume mount)
-├── py/
-│   ├── summary_yozm_ai_agent_info.py  # 원본 스크래퍼
-│   ├── book_ranking_monitor.py        # 모니터링 시스템
-│   ├── fastapi_dashboard.py           # 웹 대시보드
-│   └── README.md                      # 상세 가이드
+├── summary_yozm_ai_agent_info.py  # 원본 스크래퍼
+├── book_ranking_monitor.py        # 모니터링 시스템
+├── fastapi_dashboard.py           # 웹 대시보드
+├── README.md                      # 상세 가이드
+├── DOCKER_README.md               # Docker 상세 가이드
 ├── pyproject.toml         # Python 의존성
 └── uv.lock               # 의존성 락 파일
 ```
@@ -32,7 +32,7 @@ docker-compose --version
 ### 2. 초기 데이터 수집
 
 ```bash
-cd /Users/gyus/VSCode/scripts
+cd /Users/gyus/VSCode/scripts/book_dashboard
 
 # 초기 데이터 수집 (한 번만 실행)
 docker-compose --profile init up book-init
@@ -128,10 +128,10 @@ docker-compose logs -f book-monitor
 
 ```bash
 # 컨테이너 내에서 한 번만 실행
-docker-compose exec book-monitor uv run python py/book_ranking_monitor.py --once
+docker-compose exec book-monitor uv run python book_ranking_monitor.py --once
 
 # 통계 확인
-docker-compose exec book-monitor uv run python py/book_ranking_monitor.py --stats
+docker-compose exec book-monitor uv run python book_ranking_monitor.py --stats
 ```
 
 ### 데이터베이스 접근
@@ -148,7 +148,7 @@ docker-compose exec book-dashboard sqlite3 /app/data/book_rankings.db
 
 ### 1. 수집 주기 변경
 
-`py/book_ranking_monitor.py` 수정 후 이미지 재빌드:
+`book_ranking_monitor.py` 수정 후 이미지 재빌드:
 
 ```python
 # 10분마다
@@ -175,7 +175,7 @@ book-dashboard:
 
 ### 3. 다른 도서 모니터링
 
-`py/book_ranking_monitor.py`의 URL 변경 후 재빌드:
+`book_ranking_monitor.py`의 URL 변경 후 재빌드:
 
 ```python
 self.urls = {

@@ -536,7 +536,7 @@ async def dashboard(request: Request):
             <div class="error">
                 <h2>오류가 발생했습니다</h2>
                 <p>{str(e)}</p>
-                <p>먼저 <code>uv run py/book_ranking_monitor.py --once</code> 명령으로 데이터를 수집해주세요.</p>
+                <p>먼저 <code>uv run book_ranking_monitor.py --once</code> 명령으로 데이터를 수집해주세요.</p>
             </div>
         </body>
         </html>

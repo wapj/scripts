@@ -35,7 +35,7 @@
 ### 1. 의존성 설치
 
 ```bash
-cd /Users/gyus/VSCode/scripts
+cd /Users/gyus/VSCode/scripts/book_dashboard
 uv add httpx beautifulsoup4 schedule fastapi uvicorn pandas
 ```
 
@@ -43,14 +43,14 @@ uv add httpx beautifulsoup4 schedule fastapi uvicorn pandas
 
 ```bash
 # 데이터를 한 번만 수집
-uv run py/book_ranking_monitor.py --once
+uv run python book_ranking_monitor.py --once
 ```
 
 ### 3. 웹 대시보드 실행
 
 ```bash
 # FastAPI 대시보드 실행
-uv run python py/fastapi_dashboard.py
+uv run python fastapi_dashboard.py
 ```
 
 웹 브라우저에서 `http://localhost:8000` 접속
@@ -59,7 +59,7 @@ uv run python py/fastapi_dashboard.py
 
 ```bash
 # 30분마다 자동 데이터 수집 (백그라운드 실행)
-nohup uv run py/book_ranking_monitor.py &
+nohup uv run python book_ranking_monitor.py &
 ```
 
 ## 📋 명령어 참고
@@ -68,23 +68,23 @@ nohup uv run py/book_ranking_monitor.py &
 
 ```bash
 # 한 번만 데이터 수집
-uv run py/book_ranking_monitor.py --once
+uv run python book_ranking_monitor.py --once
 
 # 30분마다 자동 수집 (무한 실행)
-uv run py/book_ranking_monitor.py
+uv run python book_ranking_monitor.py
 
 # 데이터베이스 통계 확인
-uv run py/book_ranking_monitor.py --stats
+uv run python book_ranking_monitor.py --stats
 
 # 사용자 지정 데이터베이스 경로
-uv run py/book_ranking_monitor.py --db custom_rankings.db --once
+uv run python book_ranking_monitor.py --db custom_rankings.db --once
 ```
 
 ### fastapi_dashboard.py
 
 ```bash
 # 웹 대시보드 실행 (기본 포트 8000)
-uv run python py/fastapi_dashboard.py
+uv run python fastapi_dashboard.py
 
 # 다른 포트로 실행하려면 코드 수정 필요
 ```
@@ -125,15 +125,20 @@ uv run python py/fastapi_dashboard.py
 ## 📁 파일 구조
 
 ```
-py/
+book_dashboard/
 ├── summary_yozm_ai_agent_info.py  # 원본 스크래퍼
 ├── book_ranking_monitor.py        # 모니터링 시스템 (스케줄러 + DB)
 ├── fastapi_dashboard.py           # FastAPI 웹 대시보드
-├── dashboard.py                   # Streamlit 대시보드 (미사용)
-└── README.md                      # 사용법 가이드 (이 파일)
+├── README.md                      # 사용법 가이드 (이 파일)
+├── DOCKER_README.md               # Docker 상세 가이드
+├── Dockerfile                     # Docker 이미지 정의
+├── docker-compose.yml             # Docker 서비스 구성
+├── .dockerignore                  # Docker 빌드 제외 파일
+├── pyproject.toml                 # Python 의존성
+└── uv.lock                        # 의존성 락 파일
 
-book_rankings.db                   # SQLite 데이터베이스 파일
-book_rankings_*.json               # 백업 JSON 파일 (선택적)
+data/
+└── book_rankings.db               # SQLite 데이터베이스 파일
 ```
 
 ## 🗄️ 데이터베이스 스키마
@@ -226,7 +231,7 @@ ls -la book_rankings.db
 
 # 새 데이터베이스로 다시 시작
 rm book_rankings.db
-uv run py/book_ranking_monitor.py --once
+uv run book_ranking_monitor.py --once
 ```
 
 ## 📈 API 엔드포인트
@@ -349,7 +354,7 @@ sudo systemctl start book-monitor
 tail -f nohup.out
 
 # 데이터베이스 통계
-uv run py/book_ranking_monitor.py --stats
+uv run book_ranking_monitor.py --stats
 ```
 
 ### 백업
