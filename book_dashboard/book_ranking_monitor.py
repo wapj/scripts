@@ -11,13 +11,12 @@ from datetime import datetime, timedelta
 
 import schedule
 
+from summary_yozm_ai_agent_info import BookRankingScraper
+
 # 로거 설정
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
-
-# 현재 스크래퍼 임포트
-from summary_yozm_ai_agent_info import BookRankingScraper
 
 
 class BookRankingMonitor:
@@ -243,7 +242,7 @@ class BookRankingMonitor:
         logging.info("📅 스케줄러 시작 - 30분마다 데이터 수집")
 
         # 30분마다 실행 스케줄 등록
-        schedule.every(1).minutes.do(self.collect_data)
+        schedule.every(5).minutes.do(self.collect_data)
 
         # 즉시 한 번 실행
         self.collect_data()
