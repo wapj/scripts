@@ -1,0 +1,26 @@
+{
+  "scraping_date": "2025-08-20T22:14:14.713692",
+  "kyobobook": {
+    "url": "https://product.kyobobook.co.kr/detail/S000217241525",
+    "timestamp": "2025-08-20T22:14:14.713699",
+    "domestic_rank": 589,
+    "it_rank": 13,
+    "error": null
+  },
+  "yes24": {
+    "url": "https://www.yes24.com/product/goods/150701473",
+    "timestamp": "2025-08-20T22:14:16.369015",
+    "sales_index": "3210",
+    "it_mobile_rank": 10,
+    "error": null
+  },
+  "aladin": {
+    "url": "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=369431124",
+    "timestamp": "2025-08-20T22:14:17.807909",
+    "computer_weekly_rank": 48,
+    "textbook_rank": 2,
+    "sales_point": "1270",
+    "rank_period": "2주",
+    "error": null
+  }
+}
