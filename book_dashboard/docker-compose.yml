@@ -1,12 +1,25 @@
 version: '3.8'
 
 services:
-  # 데이터 수집 서비스 (30분마다 자동 실행)
+  # 웹 대시보드 서비스 (먼저 실행되어 DB를 초기화)
+  book-dashboard:
+    build: .
+    container_name: book-ranking-dashboard
+    ports:
+      - "8000:8000"
+    volumes:
+      - book_data:/app/data
+    environment:
+      - DB_PATH=/app/data/book_rankings.db
+    command: ["uv", "run", "python", "fastapi_dashboard.py"]
+    restart: unless-stopped
+
+  # 데이터 수집 서비스 (대시보드 실행 후 시작)
   book-monitor:
     build: .
     container_name: book-ranking-monitor
     volumes:
-      - ./data:/app/data
+      - book_data:/app/data
     environment:
       - DB_PATH=/app/data/book_rankings.db
     command: ["uv", "run", "python", "book_ranking_monitor.py"]
@@ -14,31 +27,6 @@ services:
     depends_on:
       - book-dashboard
 
-  # 웹 대시보드 서비스
-  book-dashboard:
-    build: .
-    container_name: book-ranking-dashboard
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./data:/app/data
-    environment:
-      - DB_PATH=/app/data/book_rankings.db
-    command: ["uv", "run", "python", "fastapi_dashboard.py"]
-    restart: unless-stopped
-
-  # 초기 데이터 수집 (한 번만 실행)
-  book-init:
-    build: .
-    container_name: book-ranking-init
-    volumes:
-      - ./data:/app/data
-    environment:
-      - DB_PATH=/app/data/book_rankings.db
-    command: ["uv", "run", "python", "book_ranking_monitor.py", "--once"]
-    restart: "no"
-    profiles:
-      - init
-
 volumes:
   book_data:
+    driver: local

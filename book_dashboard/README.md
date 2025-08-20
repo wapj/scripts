@@ -253,13 +253,10 @@ FastAPI는 자동 API 문서를 제공합니다:
 ### 빠른 시작
 
 ```bash
-# 1. 초기 데이터 수집
-docker-compose --profile init up book-init
-
-# 2. 전체 시스템 실행
+# 1. 전체 시스템 실행
 docker-compose up -d
 
-# 3. 웹 접속
+# 2. 웹 접속
 open http://localhost:8000
 ```
 
@@ -267,7 +264,6 @@ open http://localhost:8000
 
 - **book-dashboard**: FastAPI 웹 대시보드 (포트 8000)
 - **book-monitor**: 30분마다 자동 데이터 수집
-- **book-init**: 최초 1회 데이터 수집
 
 ### SQLite 볼륨 마운트
 
@@ -292,58 +288,13 @@ docker-compose logs -f book-dashboard
 docker-compose down
 
 # 수동 데이터 수집
-docker-compose exec book-monitor uv run python py/book_ranking_monitor.py --once
+docker-compose exec book-monitor uv run python book_ranking_monitor.py --once
 
 # 통계 확인
-docker-compose exec book-monitor uv run python py/book_ranking_monitor.py --stats
+docker-compose exec book-monitor uv run python book_ranking_monitor.py --stats
 ```
 
 자세한 Docker 사용법은 `DOCKER_README.md`를 참고하세요.
-
-## 🔄 기존 방식 배포
-
-### PM2 사용
-
-```bash
-# PM2 설치
-npm install -g pm2
-
-# 자동 모니터링 시작
-pm2 start "uv run py/book_ranking_monitor.py" --name "book-monitor"
-
-# 웹 대시보드 시작
-pm2 start "uv run python py/fastapi_dashboard.py" --name "book-dashboard"
-
-# 상태 확인
-pm2 status
-
-# 로그 확인
-pm2 logs book-monitor
-pm2 logs book-dashboard
-```
-
-### systemd 서비스 (Linux)
-
-```bash
-# /etc/systemd/system/book-monitor.service 파일 생성
-[Unit]
-Description=Book Ranking Monitor
-After=network.target
-
-[Service]
-Type=simple
-User=your-user
-WorkingDirectory=/Users/gyus/VSCode/scripts
-ExecStart=uv run py/book_ranking_monitor.py
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-
-# 서비스 시작
-sudo systemctl enable book-monitor
-sudo systemctl start book-monitor
-```
 
 ## 📊 모니터링 예제
 

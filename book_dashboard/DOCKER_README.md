@@ -29,21 +29,11 @@ docker --version
 docker-compose --version
 ```
 
-### 2. 초기 데이터 수집
+### 2. 전체 시스템 실행
 
 ```bash
 cd /Users/gyus/VSCode/scripts/book_dashboard
 
-# 초기 데이터 수집 (한 번만 실행)
-docker-compose --profile init up book-init
-
-# 또는 별도로 실행
-docker-compose run --rm book-init
-```
-
-### 3. 전체 시스템 실행
-
-```bash
 # 웹 대시보드 + 자동 모니터링 시작
 docker-compose up -d
 
@@ -81,11 +71,10 @@ docker-compose down -v
 - **환경변수**: `DB_PATH=/app/data/book_rankings.db`
 - **재시작**: `unless-stopped`
 
-### book-init (초기 설정)
+### Docker 서비스 구성
 
-- **기능**: 최초 1회 데이터 수집
-- **프로파일**: `init` (선택적 실행)
-- **실행**: `docker-compose --profile init up book-init`
+- **book-dashboard**: FastAPI 웹 대시보드 (포트 8000)
+- **book-monitor**: 30분마다 자동 데이터 수집
 
 ## 📊 SQLite 볼륨 마운트
 

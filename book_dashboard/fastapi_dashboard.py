@@ -28,6 +28,39 @@ class BookRankingAPI:
             self.db_path = os.getenv("DB_PATH", "book_rankings.db")
         else:
             self.db_path = db_path
+        self.init_database()
+
+    def init_database(self):
+        """데이터베이스 초기화 및 테이블 생성"""
+        # 데이터 디렉토리 생성
+        db_dir = Path(self.db_path).parent
+        db_dir.mkdir(parents=True, exist_ok=True)
+
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS book_rankings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp DATETIME NOT NULL,
+            scraping_date TEXT NOT NULL,
+            kyobo_domestic_rank INTEGER,
+            kyobo_it_rank INTEGER,
+            kyobo_error TEXT,
+            yes24_sales_index INTEGER,
+            yes24_it_mobile_rank INTEGER,
+            yes24_error TEXT,
+            aladin_computer_weekly_rank INTEGER,
+            aladin_textbook_rank INTEGER,
+            aladin_sales_point INTEGER,
+            aladin_rank_period TEXT,
+            aladin_error TEXT,
+            raw_data TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.commit()
+        conn.close()
+        print(f"FastAPI: 데이터베이스 초기화 확인 완료: {self.db_path}")
 
     def get_connection(self):
         return sqlite3.connect(self.db_path)
