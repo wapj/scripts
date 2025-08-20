@@ -12,6 +12,12 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import sys
 import os
+import logging
+
+# 로거 설정
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 # 현재 스크래퍼 임포트
 from summary_yozm_ai_agent_info import BookRankingScraper
@@ -80,7 +86,7 @@ class BookRankingMonitor:
 
         conn.commit()
         conn.close()
-        print(f"데이터베이스 초기화 완료: {self.db_path}")
+        logging.info(f"데이터베이스 초기화 완료: {self.db_path}")
 
     def save_ranking_data(self, results):
         """순위 데이터를 데이터베이스에 저장"""
@@ -153,17 +159,21 @@ class BookRankingMonitor:
             )
 
             conn.commit()
-            print(f"✅ 데이터 저장 완료: {timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+            logging.info(
+                f"✅ 데이터 저장 완료: {timestamp.strftime('%Y-%m-%d %H:%M:%S')}"
+            )
 
         except Exception as e:
-            print(f"❌ 데이터 저장 실패: {e}")
+            logging.error(f"❌ 데이터 저장 실패: {e}", exc_info=True)
             conn.rollback()
         finally:
             conn.close()
 
     def collect_data(self):
         """데이터 수집 및 저장 실행"""
-        print(f"\n🕐 데이터 수집 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        logging.info(
+            f"🕐 데이터 수집 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        )
 
         try:
             # 스크래핑 실행
@@ -176,7 +186,7 @@ class BookRankingMonitor:
             self.scraper.print_summary(results)
 
         except Exception as e:
-            print(f"❌ 데이터 수집 실패: {e}")
+            logging.error(f"❌ 데이터 수집 실패: {e}", exc_info=True)
 
     def get_recent_data(self, hours=24):
         """최근 데이터 조회"""
@@ -233,7 +243,7 @@ class BookRankingMonitor:
 
     def start_scheduler(self):
         """스케줄러 시작 (30분마다 실행)"""
-        print("📅 스케줄러 시작 - 30분마다 데이터 수집")
+        logging.info("📅 스케줄러 시작 - 30분마다 데이터 수집")
 
         # 30분마다 실행 스케줄 등록
         schedule.every(30).minutes.do(self.collect_data)
@@ -275,11 +285,11 @@ def main():
     try:
         if args.stats:
             stats = monitor.get_stats()
-            print("\n📊 데이터베이스 통계:")
-            print(f"  총 레코드 수: {stats['total_records']}")
-            print(f"  최오래된 데이터: {stats['oldest_data']}")
-            print(f"  최신 데이터: {stats['newest_data']}")
-            print(f"  최근 24시간 레코드: {stats['recent_24h']}")
+            logging.info("📊 데이터베이스 통계:")
+            logging.info(f"  총 레코드 수: {stats['total_records']}")
+            logging.info(f"  최오래된 데이터: {stats['oldest_data']}")
+            logging.info(f"  최신 데이터: {stats['newest_data']}")
+            logging.info(f"  최근 24시간 레코드: {stats['recent_24h']}")
 
         elif args.once:
             monitor.run_once()
@@ -287,7 +297,7 @@ def main():
             monitor.start_scheduler()
 
     except KeyboardInterrupt:
-        print("\n⏹️  모니터링 중단")
+        logging.info("⏹️  모니터링 중단")
     finally:
         monitor.close()
 

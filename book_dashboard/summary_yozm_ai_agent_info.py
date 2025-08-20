@@ -11,6 +11,13 @@ from datetime import datetime
 from typing import Dict, Optional, Any
 import time
 import asyncio
+import logging
+
+
+# 로거 설정
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 class BookRankingScraper:
@@ -45,10 +52,10 @@ class BookRankingScraper:
                 response.encoding = "utf-8"
             return response.text
         except httpx.HTTPStatusError as e:
-            print(f"HTTP 오류 ({url}): {e.response.status_code}")
+            logging.error(f"HTTP 오류 ({url}): {e.response.status_code}")
             return None
         except Exception as e:
-            print(f"페이지 가져오기 실패 ({url}): {e}")
+            logging.error(f"페이지 가져오기 실패 ({url}): {e}")
             return None
 
     def scrape_kyobobook(self, url: str) -> Dict[str, Any]:
@@ -57,7 +64,7 @@ class BookRankingScraper:
         - 국내 도서 순위
         - 컴퓨터/IT 순위
         """
-        print("교보문고 스크래핑 시작...")
+        logging.info("교보문고 스크래핑 시작...")
         kyobo_data = {
             "url": url,
             "timestamp": datetime.now().isoformat(),
@@ -181,13 +188,13 @@ class BookRankingScraper:
                                 kyobo_data["it_rank"] = int(match.group(1))
                                 break
 
-            print(
+            logging.info(
                 f"교보문고 데이터: 국내도서 {kyobo_data['domestic_rank']}위, IT {kyobo_data['it_rank']}위"
             )
 
         except Exception as e:
             kyobo_data["error"] = str(e)
-            print(f"교보문고 스크래핑 오류: {e}")
+            logging.error(f"교보문고 스크래핑 오류: {e}")
 
         return kyobo_data
 
@@ -196,7 +203,7 @@ class BookRankingScraper:
         YES24에서 판매지수와 IT 모바일 순위 추출
         메인 상품 페이지와 베스트셀러 모듈 페이지를 모두 확인
         """
-        print("YES24 스크래핑 시작...")
+        logging.info("YES24 스크래핑 시작...")
         yes24_data = {
             "url": url,
             "timestamp": datetime.now().isoformat(),
@@ -245,7 +252,7 @@ class BookRankingScraper:
                 product_id = product_id_match.group(1)
                 module_url = f"https://www.yes24.com/Product/addModules/BestSellerRank_Book/{product_id}/?categoryNumber=001001003025009&FreePrice=N"
 
-                print(f"베스트셀러 모듈 URL 확인 중: {module_url}")
+                logging.info(f"베스트셀러 모듈 URL 확인 중: {module_url}")
 
                 # 베스트셀러 모듈 페이지에서 IT 모바일 순위 추출
                 module_html = self.fetch_page(module_url)
@@ -273,9 +280,9 @@ class BookRankingScraper:
                                 break
 
                     if self.debug and module_text:
-                        print(f"모듈 페이지 내용 일부: {module_text[:200]}")
+                        logging.debug(f"모듈 페이지 내용 일부: {module_text[:200]}")
                 else:
-                    print("베스트셀러 모듈 페이지를 가져올 수 없습니다.")
+                    logging.warning("베스트셀러 모듈 페이지를 가져올 수 없습니다.")
 
             # 메인 페이지에서도 IT 모바일 순위 시도 (보조 수단)
             if not yes24_data["it_mobile_rank"]:
@@ -333,22 +340,24 @@ class BookRankingScraper:
 
             # 디버깅: 카테고리 정보가 포함된 영역 출력
             if not yes24_data["it_mobile_rank"] and self.debug:
-                print("IT 모바일 순위를 찾을 수 없음. 카테고리 관련 텍스트 검색 중...")
+                logging.debug(
+                    "IT 모바일 순위를 찾을 수 없음. 카테고리 관련 텍스트 검색 중..."
+                )
                 # 'IT', '모바일', '컴퓨터' 키워드가 포함된 요소 찾기
                 keywords = ["IT", "모바일", "컴퓨터"]
                 for keyword in keywords:
                     elements = soup.find_all(text=re.compile(keyword))
                     for elem in elements[:3]:  # 처음 3개만 확인
                         if elem and "위" in elem:
-                            print(f"  찾은 텍스트: {elem.strip()[:100]}")
+                            logging.debug(f"  찾은 텍스트: {elem.strip()[:100]}")
 
-            print(
+            logging.info(
                 f"YES24 데이터: 판매지수 {yes24_data['sales_index']}, IT모바일 {yes24_data['it_mobile_rank']}위"
             )
 
         except Exception as e:
             yes24_data["error"] = str(e)
-            print(f"YES24 스크래핑 오류: {e}")
+            logging.error(f"YES24 스크래핑 오류: {e}")
 
         return yes24_data
 
@@ -359,7 +368,7 @@ class BookRankingScraper:
         - 대학교재/전문서적 top100 순위
         - Sales Point
         """
-        print("알라딘 스크래핑 시작...")
+        logging.info("알라딘 스크래핑 시작...")
         aladin_data = {
             "url": url,
             "timestamp": datetime.now().isoformat(),
@@ -447,7 +456,7 @@ class BookRankingScraper:
                     if match:
                         aladin_data["sales_point"] = match.group(1).replace(",", "")
 
-            print(
+            logging.info(
                 f"알라딘 데이터: 컴퓨터/모바일 {aladin_data['computer_weekly_rank']}위, "
                 f"대학교재 {aladin_data['textbook_rank']}위, "
                 f"Sales Point {aladin_data['sales_point']}"
@@ -455,7 +464,7 @@ class BookRankingScraper:
 
         except Exception as e:
             aladin_data["error"] = str(e)
-            print(f"알라딘 스크래핑 오류: {e}")
+            logging.error(f"알라딘 스크래핑 오류: {e}")
 
         return aladin_data
 
@@ -469,9 +478,9 @@ class BookRankingScraper:
         Returns:
             모든 스크래핑 결과
         """
-        print(f"\n{'=' * 50}")
-        print(f"스크래핑 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"{'=' * 50}\n")
+        logging.info(
+            f"모든 사이트 스크래핑 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        )
 
         results = {
             "scraping_date": datetime.now().isoformat(),
@@ -494,9 +503,9 @@ class BookRankingScraper:
         if "aladin" in urls:
             results["aladin"] = self.scrape_aladin(urls["aladin"])
 
-        print(f"\n{'=' * 50}")
-        print(f"스크래핑 완료: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"{'=' * 50}\n")
+        logging.info(
+            f"모든 사이트 스크래핑 완료: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        )
 
         return results
 
@@ -508,50 +517,42 @@ class BookRankingScraper:
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(results, f, ensure_ascii=False, indent=2)
 
-        print(f"결과가 {filename}에 저장되었습니다.")
+        logging.info(f"결과가 {filename}에 저장되었습니다.")
         return filename
 
     def print_summary(self, results: Dict[str, Any]):
         """결과 요약 출력"""
-        print("\n" + "=" * 60)
-        print("📚 도서 순위 정보 요약")
-        print("=" * 60)
+        logging.info("========== 📚 도서 순위 정보 요약 ==========")
 
         if results.get("kyobobook"):
-            print("\n📘 교보문고")
             data = results["kyobobook"]
             if not data.get("error"):
-                print(f"  - 국내도서 순위: {data.get('domestic_rank', 'N/A')}위")
-                print(f"  - 컴퓨터/IT 순위: {data.get('it_rank', 'N/A')}위")
+                logging.info(
+                    f"📘 교보문고: 국내도서 {data.get('domestic_rank', 'N/A')}위, IT {data.get('it_rank', 'N/A')}위"
+                )
             else:
-                print(f"  ❌ 오류: {data['error']}")
+                logging.error(f"📘 교보문고: ❌ 오류: {data['error']}")
 
         if results.get("yes24"):
-            print("\n📗 YES24")
             data = results["yes24"]
             if not data.get("error"):
-                print(f"  - 판매지수: {data.get('sales_index', 'N/A')}")
-                print(f"  - IT 모바일 순위: {data.get('it_mobile_rank', 'N/A')}위")
+                logging.info(
+                    f"📗 YES24: 판매지수 {data.get('sales_index', 'N/A')}, IT모바일 {data.get('it_mobile_rank', 'N/A')}위"
+                )
             else:
-                print(f"  ❌ 오류: {data['error']}")
+                logging.error(f"📗 YES24: ❌ 오류: {data['error']}")
 
         if results.get("aladin"):
-            print("\n📙 알라딘")
             data = results["aladin"]
             if not data.get("error"):
-                print(
-                    f"  - 컴퓨터/모바일 주간: {data.get('computer_weekly_rank', 'N/A')}위"
+                logging.info(
+                    f"📙 알라딘: 컴퓨터/모바일 {data.get('computer_weekly_rank', 'N/A')}위, "
+                    f"대학교재 {data.get('textbook_rank', 'N/A')}위, "
+                    f"Sales Point {data.get('sales_point', 'N/A')}"
                 )
-                print(
-                    f"  - 대학교재/전문서적 top100: {data.get('textbook_rank', 'N/A')}위"
-                )
-                print(f"  - Sales Point: {data.get('sales_point', 'N/A')}")
-                if data.get("rank_period"):
-                    print(f"  - 순위 기간: {data['rank_period']}")
             else:
-                print(f"  ❌ 오류: {data['error']}")
-
-        print("=" * 60 + "\n")
+                logging.error(f"📙 알라딘: ❌ 오류: {data['error']}")
+        logging.info("========================================")
 
     def close(self):
         """리소스 정리"""
@@ -583,11 +584,10 @@ def main():
         filename = scraper.save_results(results)
 
         # 상세 결과 출력 (선택사항)
-        print("\n상세 결과:")
-        print(json.dumps(results, ensure_ascii=False, indent=2))
+        logging.debug(f"상세 결과: {json.dumps(results, ensure_ascii=False, indent=2)}")
 
     except Exception as e:
-        print(f"스크래핑 중 오류 발생: {e}")
+        logging.critical(f"스크래핑 중 심각한 오류 발생: {e}", exc_info=True)
     finally:
         scraper.close()
 

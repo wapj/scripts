@@ -12,6 +12,12 @@ from datetime import datetime, timedelta
 import json
 from pathlib import Path
 from typing import Optional
+import logging
+
+# 로거 설정
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 app = FastAPI(title="도서 순위 모니터링 대시보드", version="1.0.0")
 
@@ -60,7 +66,7 @@ class BookRankingAPI:
         """)
         conn.commit()
         conn.close()
-        print(f"FastAPI: 데이터베이스 초기화 확인 완료: {self.db_path}")
+        logging.info(f"FastAPI: 데이터베이스 초기화 확인 완료: {self.db_path}")
 
     def get_connection(self):
         return sqlite3.connect(self.db_path)
@@ -196,6 +202,7 @@ api = BookRankingAPI()
 @app.get("/", response_class=HTMLResponse)
 async def dashboard(request: Request):
     """메인 대시보드 페이지"""
+    logging.info("메인 대시보드 요청")
     try:
         stats = api.get_stats()
         latest = api.get_latest_data()
@@ -554,6 +561,7 @@ async def dashboard(request: Request):
         return HTMLResponse(content=html_content)
 
     except Exception as e:
+        logging.error(f"대시보드 로딩 오류: {e}", exc_info=True)
         error_html = f"""
         <!DOCTYPE html>
         <html lang="ko">
@@ -580,30 +588,36 @@ async def dashboard(request: Request):
 @app.get("/api/stats")
 async def get_stats():
     """통계 API"""
+    logging.info("API 요청: /api/stats")
     try:
         stats = api.get_stats()
         return stats
     except Exception as e:
+        logging.error(f"/api/stats 처리 오류: {e}", exc_info=True)
         return {"error": str(e)}
 
 
 @app.get("/api/latest")
 async def get_latest():
     """최신 데이터 API"""
+    logging.info("API 요청: /api/latest")
     try:
         latest = api.get_latest_data()
         return latest
     except Exception as e:
+        logging.error(f"/api/latest 처리 오류: {e}", exc_info=True)
         return {"error": str(e)}
 
 
 @app.get("/api/chart-data")
 async def get_chart_data(hours: Optional[int] = 24):
     """차트 데이터 API"""
+    logging.info(f"API 요청: /api/chart-data?hours={hours}")
     try:
         data = api.get_chart_data(hours)
         return data
     except Exception as e:
+        logging.error(f"/api/chart-data 처리 오류: {e}", exc_info=True)
         return {"error": str(e)}
 
 
