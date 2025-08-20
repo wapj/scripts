@@ -2,19 +2,20 @@
 FastAPI 기반 도서 순위 모니터링 대시보드
 """
 
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
+import logging
 import sqlite3
-import pandas as pd
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
-import logging
+
+import pandas as pd
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 # 로거 설정
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    level=logging.INFO, format="%(asc time)s - %(levelname)s - %(message)s"
 )
 
 app = FastAPI(title="도서 순위 모니터링 대시보드", version="1.0.0")
@@ -29,7 +30,7 @@ class BookRankingAPI:
             # 환경 변수에서 DB 경로 가져오기, 없으면 기본값 사용
             import os
 
-            self.db_path = os.getenv("DB_PATH", "book_rankings.db")
+            self.db_path = os.getenv("DB_PATH", "data/book_rankings.db")
         else:
             self.db_path = db_path
         self.init_database()
@@ -334,17 +335,17 @@ async def dashboard(request: Request):
             f'''
             <div class="latest-data">
                 <div class="bookstore-card bookstore-kyobo">
-                    <div class="bookstore-title">📘 교보문고</div>
+                    <div class="bookstore-title">📘 <a href="https://product.kyobobook.co.kr/detail/S000217241525">교보문고</a></div>
                     <div><strong>국내도서 순위:</strong> {latest.get("kyobo_domestic_rank", "N/A")}위</div>
                     <div><strong>컴퓨터/IT 순위:</strong> {latest.get("kyobo_it_rank", "N/A")}위</div>
                 </div>
                 <div class="bookstore-card bookstore-yes24">
-                    <div class="bookstore-title">📗 YES24</div>
+                    <div class="bookstore-title">📗 <a href="https://www.yes24.com/product/goods/150701473">YES24</a></div>
                     <div><strong>판매지수:</strong> {latest.get("yes24_sales_index", "N/A")}</div>
                     <div><strong>IT모바일 순위:</strong> {latest.get("yes24_it_mobile_rank", "N/A")}위</div>
                 </div>
                 <div class="bookstore-card bookstore-aladin">
-                    <div class="bookstore-title">📙 알라딘</div>
+                    <div class="bookstore-title">📙 <a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=369431124">알라딘</a></div>
                     <div><strong>컴퓨터/모바일 주간:</strong> {latest.get("aladin_computer_weekly_rank", "N/A")}위</div>
                     <div><strong>대학교재 순위:</strong> {latest.get("aladin_textbook_rank", "N/A")}위</div>
                     <div><strong>Sales Point:</strong> {latest.get("aladin_sales_point", "N/A")}</div>

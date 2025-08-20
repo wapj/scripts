@@ -18,6 +18,8 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+# 현재 스크래퍼 임포트
+
 
 class BookRankingMonitor:
     def __init__(self, db_path=None):
@@ -26,7 +28,7 @@ class BookRankingMonitor:
             # 환경 변수에서 DB 경로 가져오기, 없으면 기본값 사용
             import os
 
-            self.db_path = os.getenv("DB_PATH", "book_rankings.db")
+            self.db_path = os.getenv("DB_PATH", "data/book_rankings.db")
         else:
             self.db_path = db_path
         self.scraper = BookRankingScraper()
@@ -242,7 +244,7 @@ class BookRankingMonitor:
         logging.info("📅 스케줄러 시작 - 30분마다 데이터 수집")
 
         # 30분마다 실행 스케줄 등록
-        schedule.every(5).minutes.do(self.collect_data)
+        schedule.every(1).minutes.do(self.collect_data)
 
         # 즉시 한 번 실행
         self.collect_data()
@@ -270,7 +272,7 @@ def main():
         "--once", action="store_true", help="한 번만 실행 (스케줄러 시작하지 않음)"
     )
     parser.add_argument(
-        "--db", default="book_rankings.db", help="데이터베이스 파일 경로"
+        "--db", default="data/book_rankings.db", help="데이터베이스 파일 경로"
     )
     parser.add_argument("--stats", action="store_true", help="통계 정보 출력")
 

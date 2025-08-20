@@ -6,7 +6,7 @@ services:
     build: .
     container_name: book-ranking-dashboard
     ports:
-      - "8000:8000"
+      - "51820:8000"
     volumes:
       - ./data:/app/data  # 로컬 디렉토리를 직접 마운트
     environment:
