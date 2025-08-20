@@ -3,16 +3,15 @@
 교보문고, YES24, 알라딘에서 도서 순위 정보를 추출합니다.
 """
 
+import json
+import logging
+import re
+import time
+from datetime import datetime
+from typing import Any, Dict, Optional
+
 import httpx
 from bs4 import BeautifulSoup
-import json
-import re
-from datetime import datetime
-from typing import Dict, Optional, Any
-import time
-import asyncio
-import logging
-
 
 # 로거 설정
 logging.basicConfig(

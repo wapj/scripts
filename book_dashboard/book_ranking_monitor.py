@@ -3,16 +3,13 @@
 30분마다 도서 순위 정보를 수집하고 데이터베이스에 저장
 """
 
-import sqlite3
 import json
-import time
-import schedule
-import threading
-from datetime import datetime, timedelta
-from pathlib import Path
-import sys
-import os
 import logging
+import sqlite3
+import time
+from datetime import datetime, timedelta
+
+import schedule
 
 # 로거 설정
 logging.basicConfig(
@@ -246,7 +243,7 @@ class BookRankingMonitor:
         logging.info("📅 스케줄러 시작 - 30분마다 데이터 수집")
 
         # 30분마다 실행 스케줄 등록
-        schedule.every(30).minutes.do(self.collect_data)
+        schedule.every(1).minutes.do(self.collect_data)
 
         # 즉시 한 번 실행
         self.collect_data()

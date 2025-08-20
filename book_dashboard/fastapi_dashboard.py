@@ -3,13 +3,11 @@ FastAPI 기반 도서 순위 모니터링 대시보드
 """
 
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, FileResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import sqlite3
 import pandas as pd
 from datetime import datetime, timedelta
-import json
 from pathlib import Path
 from typing import Optional
 import logging
