@@ -8,7 +8,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - book_data:/app/data
+      - ./data:/app/data  # 로컬 디렉토리를 직접 마운트
     environment:
       - DB_PATH=/app/data/book_rankings.db
     command: ["uv", "run", "python", "fastapi_dashboard.py"]
@@ -19,14 +19,10 @@ services:
     build: .
     container_name: book-ranking-monitor
     volumes:
-      - book_data:/app/data
+      - ./data:/app/data  # 로컬 디렉토리를 직접 마운트
     environment:
       - DB_PATH=/app/data/book_rankings.db
     command: ["uv", "run", "python", "book_ranking_monitor.py"]
     restart: unless-stopped
     depends_on:
       - book-dashboard
-
-volumes:
-  book_data:
-    driver: local
